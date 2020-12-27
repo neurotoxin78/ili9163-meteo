@@ -106,8 +106,8 @@ class UserInterface(object):
             self.tft.FONT_DefaultSmall,
             self.tft.FONT_Small,
         )
-        self.bg_color = 0x404040
-        self.bme_panel_color = 0x6493EC
+        self.bg_color = 0x493C0D
+        self.bme_panel_color = 0xFEA16F
         self.tft.set_bg(self.bg_color)
         self.maxx, self.maxy = self.tft.screensize()
         self.tft.resetwin()
