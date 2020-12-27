@@ -106,25 +106,33 @@ class UserInterface(object):
             self.tft.FONT_DefaultSmall,
             self.tft.FONT_Small,
         )
-        bg_color = 0x404040
-        self.tft.set_bg(bg_color)
+        self.bg_color = 0x404040
+        self.bme_panel_color = 0x6493EC
+        self.tft.set_bg(self.bg_color)
         self.maxx, self.maxy = self.tft.screensize()
         self.tft.resetwin()
         self.tft.setwin(0, 0, self.maxx, self.maxy)
-        self.tft.rect(0, 0, self.maxx, self.maxy, bg_color, bg_color)# print display header
+        self.tft.rect(0, 0, self.maxx, self.maxy, self.bg_color, self.bg_color)# entrie background
+        self.tft.rect(0, 0, 128, 21, self.bg_color, self.bme_panel_color)# bme background
 
     def mem_free_label(self, text, color):
+        self.tft.set_bg(self.bg_color)
         self.tft.font(self.tft.FONT_Default, rotate=0)
-        self.tft.text(5, 112, 'RAM: ' + str(text) + ' free', color, transparent=False)
+        self.tft.text(5, 117, 'RAM: ' + str(text) + ' free', color, transparent=False)
     def temp_label(self, text, color):
+        degree_sign=  chr(42)
+        self.tft.set_bg(self.bme_panel_color)
         self.tft.font(self.tft.FONT_DejaVu18, rotate=0)
-        self.tft.text(5, 0, str(text), color, transparent=False)
+        self.tft.text(5, 2, str(text) + degree_sign + "C", color, transparent=False)
     def humi_label(self, text, color):
+        self.tft.set_bg(self.bme_panel_color)
         self.tft.font(self.tft.FONT_DejaVu18, rotate=0)
-        self.tft.text(80, 0, str(text), color, transparent=False)
+        self.tft.text(80, 2, str(text) + "%", color, transparent=False)
     def pres_label(self, text, color):
+        self.tft.set_bg(self.bg_color)
         self.tft.font(self.tft.FONT_Ubuntu, rotate=0)
-        self.tft.text(5, 20, str(text), color, transparent=False)
+        self.tft.text(5, 22, str(text) + " mmHg", color, transparent=False)
     def time_label(self, text, color):
+        self.tft.set_bg(self.bg_color)
         self.tft.font(self.tft.FONT_DejaVu24, rotate=0)
         self.tft.text(self.tft.CENTER, 50, str(text), color, transparent=False)

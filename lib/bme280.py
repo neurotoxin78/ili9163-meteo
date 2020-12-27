@@ -202,5 +202,5 @@ class BME280:
 
         hi = h // 1024
         hd = h * 100 // 1024 - hi * 100
-        return ("{:d}oC".format(int(t / 100)), "{} mmHg".format(pi * 0.76),
-                "{}%".format(hi))
+        return ("{:d}".format(int(t / 100)), "{}".format(pi * 0.75),
+                "{}".format(hi))
