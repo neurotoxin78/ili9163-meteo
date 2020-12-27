@@ -14,7 +14,7 @@ while not rtc.synced():
 
 collect()
 
-theme = mini
+theme = indigo
 ui = UserInterface(theme)
 sensor = SENSOR()
 

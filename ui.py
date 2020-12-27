@@ -141,5 +141,5 @@ class UserInterface(object):
 
     def time_label(self, text):
         self.tft.set_bg(self.bg_color)
-        self.tft.font("fonts/dseg20.fon", rotate=0)
+        self.tft.font("fonts/dotm.fon", rotate=0)
         self.tft.text(self.tft.CENTER, 42, str(text), self.theme['clock'], transparent=False)
