@@ -136,7 +136,7 @@ class UserInterface(object):
 
     def pres_label(self, text):
         self.tft.set_bg(self.bg_color)
-        self.tft.font(self.tft.FONT_Default, rotate=0)
+        self.tft.font("fonts/uni-14.fon", rotate=0)
         self.tft.text(5, 24, str(text), self.theme['press_label'], transparent=False)
 
     def time_label(self, text):
