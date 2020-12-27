@@ -90,7 +90,7 @@ def tft_init(disp):
 class UserInterface(object):
     """docstring for UserInterfa"""
 
-    def __init__(self):
+    def __init__(self, theme):
         self.tft = display.TFT()
         self.tft.init(self.tft.GENERIC, width=130, height=130, miso=19, mosi=23, clk=18, cs=2, dc=5, bgr=False)
         tft_init(self.tft)
@@ -106,33 +106,40 @@ class UserInterface(object):
             self.tft.FONT_DefaultSmall,
             self.tft.FONT_Small,
         )
-        self.bg_color = 0x493C0D
-        self.bme_panel_color = 0xFEA16F
+        self.theme = theme
+        self.bg_color = self.theme['background']
+        self.top_panel_color = self.theme['top_panel']
+        self.bottom_panel_color = self.theme['bottom_panel']
         self.tft.set_bg(self.bg_color)
         self.maxx, self.maxy = self.tft.screensize()
         self.tft.resetwin()
         self.tft.setwin(0, 0, self.maxx, self.maxy)
         self.tft.rect(0, 0, self.maxx, self.maxy, self.bg_color, self.bg_color)# entrie background
-        self.tft.rect(0, 0, 128, 21, self.bg_color, self.bme_panel_color)# bme background
+        self.tft.rect(0, 0, 128, 23, self.bg_color, self.top_panel_color)# top_panel
+        self.tft.rect(0, 115, 130, 15, self.bg_color, self.bottom_panel_color) # bottom_panel
 
-    def mem_free_label(self, text, color):
+    def mem_free_label(self, text):
+        self.tft.set_bg(self.bottom_panel_color)
+        self.tft.font(self.tft.FONT_Default, rotate=0)
+        self.tft.text(5, 117, 'RAM: ' + str(text) + ' free', self.theme['mem_free_label'], transparent=False)
+
+    def temp_label(self, text):
+        degree_sign=  chr(42)
+        self.tft.set_bg(self.top_panel_color)
+        self.tft.font(self.tft.FONT_DejaVu18, rotate=0)
+        self.tft.text(5, 4, str(text) + degree_sign + "C", self.theme['temp_label'], transparent=False)
+
+    def humi_label(self, text):
+        self.tft.set_bg(self.top_panel_color)
+        self.tft.font(self.tft.FONT_DejaVu18, rotate=0)
+        self.tft.text(80, 4, str(text) + "%", self.theme['humi_label'], transparent=False)
+
+    def pres_label(self, text):
         self.tft.set_bg(self.bg_color)
         self.tft.font(self.tft.FONT_Default, rotate=0)
-        self.tft.text(5, 117, 'RAM: ' + str(text) + ' free', color, transparent=False)
-    def temp_label(self, text, color):
-        degree_sign=  chr(42)
-        self.tft.set_bg(self.bme_panel_color)
-        self.tft.font(self.tft.FONT_DejaVu18, rotate=0)
-        self.tft.text(5, 2, str(text) + degree_sign + "C", color, transparent=False)
-    def humi_label(self, text, color):
-        self.tft.set_bg(self.bme_panel_color)
-        self.tft.font(self.tft.FONT_DejaVu18, rotate=0)
-        self.tft.text(80, 2, str(text) + "%", color, transparent=False)
-    def pres_label(self, text, color):
+        self.tft.text(5, 24, str(text), self.theme['press_label'], transparent=False)
+
+    def time_label(self, text):
         self.tft.set_bg(self.bg_color)
-        self.tft.font(self.tft.FONT_Ubuntu, rotate=0)
-        self.tft.text(5, 22, str(text) + " mmHg", color, transparent=False)
-    def time_label(self, text, color):
-        self.tft.set_bg(self.bg_color)
-        self.tft.font(self.tft.FONT_DejaVu24, rotate=0)
-        self.tft.text(self.tft.CENTER, 50, str(text), color, transparent=False)
+        self.tft.font("fonts/dseg20.fon", rotate=0)
+        self.tft.text(self.tft.CENTER, 42, str(text), self.theme['clock'], transparent=False)
